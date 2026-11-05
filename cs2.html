@@ -1,0 +1,693 @@
+# CS2 Offsets Generator — Premium UI
+
+Save the following code as `index.html`.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS2 | Offsets Generator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg: #080b12;
+    --panel: #101622;
+    --panel2: #151e2d;
+    --border: #253249;
+    --blue: #438cff;
+    --cyan: #27d9ff;
+    --text: #eaf1ff;
+    --muted: #8998ae;
+    --green: #35d99a;
+    --red: #ff647c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: radial-gradient(ellipse at top, #14213a 0%, #080b12 60%);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    height: 76px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(8,11,18,.8);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,var(--blue),var(--cyan));
+    color: white;
+    font-weight: 900;
+    font-size: 19px;
+    box-shadow: 0 0 25px #438cff50;
+}
+
+.brand span { color: var(--cyan); }
+
+.version {
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid #35d99a50;
+    background: #35d99a10;
+    padding: 7px 12px;
+    border-radius: 30px;
+}
+
+.container {
+    max-width: 1150px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.hero { margin-bottom: 30px; }
+
+.hero small {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+h1 {
+    font-size: clamp(29px,5vw,43px);
+    margin: 12px 0;
+    letter-spacing: -2px;
+}
+
+h1 span {
+    background: linear-gradient(90deg,var(--blue),var(--cyan));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 17px;
+}
+
+.stat small { color: var(--muted); font-size: 11px; }
+.stat strong { display:block; font-size: 23px; margin-top: 9px; }
+
+.panel {
+    background: rgba(16,22,34,.95);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 15px 50px #0002;
+}
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.panel-head h2 { font-size: 16px; margin: 0; }
+.panel-head small { color: var(--muted); font-size: 11px; }
+
+.drop {
+    border: 2px dashed #344b6e;
+    background: linear-gradient(135deg,#142139,#101a2b);
+    padding: 42px 15px;
+    text-align: center;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.drop:hover,.drop.highlight {
+    border-color: var(--cyan);
+    background: #172944;
+    box-shadow: 0 0 30px #27d9ff12;
+}
+
+.upload-icon {
+    font-size: 37px;
+    margin-bottom: 13px;
+}
+
+.drop h3 { font-size: 15px; margin: 8px 0; }
+.drop p { color: var(--muted); font-size: 12px; }
+.drop input { display:none; }
+
+.browse {
+    display: inline-block;
+    background: var(--blue);
+    padding: 10px 19px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.files {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 13px;
+    margin-top: 18px;
+}
+
+.file {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    padding: 15px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-icon {
+    background: #438cff20;
+    color: var(--cyan);
+    width: 39px;
+    height: 39px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+.file-info { flex: 1; min-width: 0; }
+.file-info strong { font-size: 12px; display: block; }
+.file-info small { font-size: 10px; color: var(--muted); }
+.file-status { color: var(--muted); font-size: 11px; }
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    border: 0;
+    padding: 12px 19px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover { transform: translateY(-2px); filter: brightness(1.13); }
+
+.primary {
+    color: white;
+    background: linear-gradient(100deg,#3478ed,#27bce8);
+}
+
+.secondary {
+    color: var(--text);
+    background: #253249;
+    border: 1px solid #35445e;
+}
+
+.status {
+    padding: 12px 15px;
+    border-radius: 9px;
+    background: #151e2d;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 17px;
+    display: none;
+}
+
+.status.success { color: var(--green); border-color: #35d99a40; }
+.status.error { color: var(--red); border-color: #ff647c40; }
+
+.output {
+    background: #080d16;
+    border: 1px solid #27364e;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.output-head {
+    padding: 13px 16px;
+    background: #121b29;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.output-head strong { font-size: 12px; }
+
+.dots { display: flex; gap: 5px; }
+.dots i { width: 8px; height: 8px; border-radius: 50%; background:#ff647c; }
+.dots i:nth-child(2) { background:#ffc45c; }
+.dots i:nth-child(3) { background:#35d99a; }
+
+pre {
+    margin: 0;
+    padding: 20px;
+    min-height: 350px;
+    max-height: 600px;
+    overflow: auto;
+    color: #a9d5ff;
+    font: 12px/1.8 'JetBrains Mono',monospace;
+    white-space: pre;
+    tab-size: 4;
+}
+
+footer {
+    text-align: center;
+    color: #63738b;
+    font-size: 11px;
+    padding: 25px;
+}
+
+@media(max-width:650px) {
+    header { padding: 0 18px; }
+    .container { margin: 30px auto; }
+    .stats { grid-template-columns: 1fr; }
+    .files { grid-template-columns: 1fr; }
+    .panel { padding: 17px; }
+    .panel-head { align-items: flex-start; flex-direction: column; }
+    .actions button { flex: 1; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="brand">
+        <div class="logo">C2</div>
+        CS2 <span>GENERATOR</span>
+    </div>
+    <div class="version">● SYSTEM READY</div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <small>DEVELOPER TOOL / OFFSETS</small>
+        <h1>Offsets <span>Generator</span></h1>
+        <p>Upload your JSON files and generate your C# Offsets.cs file instantly.</p>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <small>FILES LOADED</small>
+            <strong id="count">0 / 2</strong>
+        </div>
+        <div class="stat">
+            <small>GENERATION STATUS</small>
+            <strong id="genStatus" style="color:#ffc45c">Waiting</strong>
+        </div>
+        <div class="stat">
+            <small>OUTPUT FORMAT</small>
+            <strong style="color:#27d9ff">C# .CS</strong>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>01 / Upload JSON Files</h2>
+            <small>Required: 2 JSON files</small>
+        </div>
+
+        <div class="drop" id="dragArea">
+            <div class="upload-icon">☁️</div>
+            <h3>Drag & Drop your JSON files</h3>
+            <p>Upload offsets.json and client_dll.json</p>
+            <span class="browse">Browse Files</span>
+            <input type="file" id="fileInput" accept=".json,application/json" multiple>
+        </div>
+
+        <div class="files">
+            <div class="file">
+                <div class="file-icon">JSON</div>
+                <div class="file-info">
+                    <strong>offsets.json</strong>
+                    <small>Global offsets</small>
+                </div>
+                <span class="file-status" id="offsetStatus">Pending</span>
+            </div>
+
+            <div class="file">
+                <div class="file-icon">JSON</div>
+                <div class="file-info">
+                    <strong>client_dll.json</strong>
+                    <small>Client DLL classes</small>
+                </div>
+                <span class="file-status" id="clientStatus">Pending</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="primary" onclick="copyToClipboard()">Copy C# Code ↗</button>
+            <button class="secondary" onclick="clearFiles()">Clear All</button>
+        </div>
+
+        <div id="status" class="status"></div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>02 / Generated Output</h2>
+            <small>Offsets.cs</small>
+        </div>
+
+        <div class="output">
+            <div class="output-head">
+                <strong>● Offsets.cs</strong>
+                <div class="dots"><i></i><i></i><i></i></div>
+            </div>
+            <pre id="output">Waiting for JSON files...
+
+Upload both required files to generate C# code.</pre>
+        </div>
+    </section>
+</main>
+
+<footer>CS2 OFFSETS GENERATOR • LOCAL PROCESSING • NO SERVER UPLOAD</footer>
+
+<script>
+const dragArea = document.getElementById('dragArea');
+const fileInput = document.getElementById('fileInput');
+const output = document.getElementById('output');
+const statusBox = document.getElementById('status');
+
+let loadedFiles = { offsets: null, client_dll: null };
+
+function showStatus(message, type='') {
+    statusBox.textContent = message;
+    statusBox.className = 'status ' + type;
+    statusBox.style.display = 'block';
+}
+
+['dragenter','dragover','dragleave','drop'].forEach(event => {
+    dragArea.addEventListener(event, e => {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+});
+
+['dragenter','dragover'].forEach(event =>
+    dragArea.addEventListener(event, () => dragArea.classList.add('highlight'))
+);
+
+['dragleave','drop'].forEach(event =>
+    dragArea.addEventListener(event, () => dragArea.classList.remove('highlight'))
+);
+
+dragArea.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+dragArea.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', () => {
+    handleFiles(fileInput.files);
+    fileInput.value = '';
+});
+
+function handleFiles(files) {
+    if (!files.length) return;
+
+    let pending = 0;
+    let errors = [];
+
+    for (const file of files) {
+        const name = file.name.toLowerCase();
+
+        if (!name.endsWith('.json')) {
+            errors.push(file.name + ': Not a JSON file');
+            continue;
+        }
+
+        let type = name === 'offsets.json' ? 'offsets'
+                 : name === 'client_dll.json' ? 'client_dll' : null;
+
+        if (!type) {
+            errors.push(file.name + ': Unknown filename');
+            continue;
+        }
+
+        pending++;
+
+        const reader = new FileReader();
+
+        reader.onload = e => {
+            try {
+                const parsed = JSON.parse(e.target.result);
+                if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+                    throw new Error('Invalid JSON structure');
+
+                loadedFiles[type] = parsed;
+            } catch (err) {
+                errors.push(file.name + ': ' + err.message);
+                loadedFiles[type] = null;
+            }
+
+            pending--;
+
+            if (pending === 0) {
+                updateFileList();
+                generateCode();
+
+                if (errors.length) showStatus(errors.join(' | '), 'error');
+            }
+        };
+
+        reader.onerror = () => {
+            pending--;
+            errors.push(file.name + ': Failed to read');
+            if (!pending) {
+                updateFileList();
+                showStatus(errors.join(' | '), 'error');
+            }
+        };
+
+        reader.readAsText(file);
+    }
+
+    if (!pending && errors.length) showStatus(errors.join(' | '), 'error');
+}
+
+function updateFileList() {
+    const a = !!loadedFiles.offsets;
+    const b = !!loadedFiles.client_dll;
+
+    document.getElementById('offsetStatus').textContent = a ? '✓ Loaded' : 'Pending';
+    document.getElementById('clientStatus').textContent = b ? '✓ Loaded' : 'Pending';
+    document.getElementById('offsetStatus').style.color = a ? '#35d99a' : '';
+    document.getElementById('clientStatus').style.color = b ? '#35d99a' : '';
+
+    document.getElementById('count').textContent = `${Number(a)+Number(b)} / 2`;
+}
+
+function generateCode() {
+    if (!loadedFiles.offsets || !loadedFiles.client_dll) {
+        output.textContent = 'Waiting for both JSON files...';
+        document.getElementById('genStatus').textContent = 'Waiting';
+        return;
+    }
+
+    try {
+        output.textContent = generateOffsetsClass();
+        document.getElementById('genStatus').textContent = 'Generated';
+        document.getElementById('genStatus').style.color = '#35d99a';
+        showStatus('✓ C# code generated successfully!', 'success');
+    } catch (error) {
+        output.textContent = 'Error generating code: ' + error.message;
+        document.getElementById('genStatus').textContent = 'Error';
+        showStatus('Generation error: ' + error.message, 'error');
+    }
+}
+
+function generateOffsetsClass() {
+    const offsetsData = loadedFiles.offsets;
+    const clientData = loadedFiles.client_dll;
+
+    const clientDll = offsetsData['client.dll'] || {};
+    const classes = clientData['client.dll']?.classes || {};
+
+    const getField = (className, fieldName) => {
+        return classes[className]?.fields?.[fieldName] ?? 0;
+    };
+
+    const names = [
+        ['C_BaseEntity','m_fFlags','m_fFlags'],
+        ['C_BaseEntity','m_lifeState','m_lifeState'],
+        ['C_BaseEntity','m_iHealth','m_iHealth'],
+        ['C_BaseEntity','m_iTeamNum','m_iTeamNum'],
+        ['C_BaseEntity','m_pGameSceneNode','m_pGameSceneNode'],
+        ['C_BaseEntity','m_vecAbsVelocity','m_vecAbsVelocity'],
+        ['C_BasePlayerPawn','m_vOldOrigin','m_vOldOrigin'],
+        ['C_BaseModelEntity','m_vecViewOffset','m_vecViewOffset'],
+        ['C_CSPlayerPawn','m_AimPunchAngle','m_aimPunchAngle'],
+        ['C_CSPlayerPawn','m_AimPunchCache','m_aimPunchCache'],
+        ['C_CSPlayerPawn','m_pAimPunchServices','m_pAimPunchServices'],
+        ['C_CSPlayerPawn','m_iIDEntIndex','m_iIDEntIndex'],
+        ['C_CSPlayerPawn','m_iShotsFired','m_iShotsFired'],
+        ['C_CSPlayerPawn','m_entitySpottedState','m_entitySpottedState'],
+        ['CPlayer_CameraServices','m_vecCsViewPunchAngle','m_vecCsViewPunchAngle'],
+        ['CSkeletonInstance','m_modelState','m_modelState'],
+        ['CGameSceneNode','m_bDormant','m_bDormant'],
+        ['CBasePlayerController','m_hPawn','m_hPawn'],
+        ['C_AttributeContainer','m_Item','m_Item'],
+        ['C_CSPlayerPawnBase','m_pClippingWeapon','m_pClippingWeapon'],
+        ['C_CSPlayerPawnBase','m_bIsScoped','m_bIsScoped'],
+        ['C_CSPlayerPawnBase','m_flFlashDuration','m_flFlashDuration'],
+        ['C_EconEntity','m_AttributeManager','m_AttributeManager'],
+        ['C_EconItemView','m_iItemDefinitionIndex','m_iItemDefinitionIndex'],
+        ['CBasePlayerController','m_iszPlayerName','m_iszPlayerName'],
+        ['C_PlantedC4','m_nBombSite','m_nBombSite'],
+        ['C_PlantedC4','m_bBombDefused','m_bBombDefused'],
+        ['C_PlantedC4','m_flDefuseCountDown','m_flDefuseCountDown'],
+        ['C_PlantedC4','m_flC4Blow','m_flC4Blow'],
+        ['C_PlantedC4','m_bBeingDefused','m_bBeingDefused']
+    ];
+
+    let code = `namespace CS2Cheat.Utils;
+
+public abstract class Offsets
+{
+    #region offsets
+
+    public const float WeaponRecoilScale = 2f;
+    public const nint m_nCurrentTickThisFrame = 0x34;
+
+    // Offsets from offsets.json (client.dll)
+`;
+
+    const globals = [
+        'dwLocalPlayerPawn','dwEntityList','dwViewMatrix',
+        'dwViewAngles','dwLocalPlayerController','dwPlantedC4','dwGlobalVars'
+    ];
+
+    for (const key of globals) {
+        code += `    public static int ${key} = ${clientDll[key] ?? 0};\n`;
+    }
+
+    code += '\n    // Offsets from client_dll.json\n';
+
+    let lastClass = '';
+
+    for (const [className, property, field] of names) {
+        if (lastClass !== className) {
+            code += `\n    // ${className}\n`;
+            lastClass = className;
+        }
+        code += `    public static int ${property} = ${getField(className,field)};\n`;
+    }
+
+    code += `
+    public static readonly Dictionary<string, int> Bones = new()
+    {
+        { "head", 7 },
+        { "neck_0", 6 },
+        { "spine_1", 8 },
+        { "spine_2", 3 },
+        { "pelvis", 1 },
+        { "arm_upper_L", 9 },
+        { "arm_lower_L", 10 },
+        { "hand_L", 11 },
+        { "arm_upper_R", 13 },
+        { "arm_lower_R", 14 },
+        { "hand_R", 15 },
+        { "leg_upper_L", 17 },
+        { "leg_lower_L", 18 },
+        { "ankle_L", 19 },
+        { "leg_upper_R", 20 },
+        { "leg_lower_R", 21 },
+        { "ankle_R", 22 }
+    };
+
+    #endregion
+}`;
+
+    return code;
+}
+
+async function copyToClipboard() {
+    const text = output.textContent;
+
+    if (!loadedFiles.offsets || !loadedFiles.client_dll ||
+        !text.trim() || text.includes('Waiting')) {
+        showStatus('Please upload both JSON files first.', 'error');
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(text);
+        showStatus('✓ C# code copied to clipboard!', 'success');
+    } catch {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+
+        try {
+            document.execCommand('copy');
+            showStatus('✓ C# code copied!', 'success');
+        } catch {
+            showStatus('Unable to copy. Select the code manually.', 'error');
+        }
+
+        area.remove();
+    }
+}
+
+function clearFiles() {
+    loadedFiles = { offsets: null, client_dll: null };
+    fileInput.value = '';
+
+    updateFileList();
+
+    output.textContent = 'Waiting for JSON files...\n\nUpload both required files to generate C# code.';
+
+    document.getElementById('genStatus').textContent = 'Waiting';
+    document.getElementById('genStatus').style.color = '#ffc45c';
+
+    showStatus('All files cleared.', 'success');
+}
+</script>
+
+</body>
+</html>
+```

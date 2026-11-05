@@ -1,0 +1,21 @@
+RAJU MODS V2 - KeyAuth setup
+
+Configured from the details supplied:
+  Application name: PAID
+  Owner ID: GsA1kEqg2R
+  Version: 1.0
+
+The official KeyAuth C# example files are included in Auth/ (KeyAuth.cs and
+Ed25519.cs), with the example's README/license notice retained.
+
+At startup the app initializes KeyAuth and shows the Login panel.
+Use "Create Account" to hide Login and show Registration. Use "Back to Login"
+to hide Registration and show Login. Registration submits username, password,
+and license key. Successful login/registration allows the existing app startup.
+
+IMPORTANT:
+- The provided current SDK constructor only needs name, ownerid and version.
+- If KeyAuth dashboard has different credentials/version, update AuthForm.cs.
+- Test with a valid license key and account from your KeyAuth dashboard.
+- This source has not been compiled in this environment; build with Visual Studio
+  2022 / .NET 8 SDK on Windows and resolve any machine-specific dependency issues.
